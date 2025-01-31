@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Shop - Add Items & Buy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar .nav-links {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .add-item-container,
+        .buy-container,
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 50px;
+        }
+
+        .add-item-box,
+        .buy-box,
+        .payment-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .item-list .item {
+            display: flex;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            width: 300px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-list .item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .payment-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .payment-info img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .payment-container .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="#" class="logo">SwapShop</a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-items.html" id="addItemsLink">Add Items</a></li>
+        <li><a href="buy.html" id="buyLink">Buy Items</a></li>
+        <li><a href="payment.html" id="paymentLink">Payment</a></li>
+    </ul>
+</header>
+
+<!-- Add Item Section -->
+<section class="add-item-container" id="addItemPage">
+    <div class="add-item-box">
+        <h2>Add Item</h2>
+        <form id="addItemForm">
+            <div class="form-group">
+                <label for="itemName">Name:</label>
+                <input type="text" id="itemName" name="itemName" placeholder="Enter item name" required>
+            </div>
+            <div class="form-group">
+                <label for="itemPhoto">Upload Photo:</label>
+                <input type="file" id="itemPhoto" name="itemPhoto" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="itemPrice">Price:</label>
+                <input type="number" id="itemPrice" name="itemPrice" placeholder="Enter item price" required>
+            </div>
+            <div class="form-group">
+                <label for="itemCategory">Category:</label>
+                <select id="itemCategory" name="itemCategory" required>
+                    <option value="" disabled selected>Choose a category</option>
+                    <option value="Books">Books</option>
+                    <option value="Calculators">Calculators</option>
+                    <option value="Protractors">Protractors</option>
+                    <option value="Mini-Drafters">Mini-Drafters</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Submit Item</button>
+        </form>
+    </div>
+</section>
+
+<!-- Buy Item Section -->
+<section class="buy-container" id="buyPage" style="display: none;">
+    <div class="buy-box">
+        <h2>Items for Sale</h2>
+        <div class="item-list" id="itemList"></div>
+    </div>
+</section>
+
+<!-- Payment Page Section -->
+<section class="payment-container" id="paymentPage" style="display: none;">
+    <div class="payment-box">
+        <h2>Complete Your Payment</h2>
+        <div class="payment-info" id="paymentItemDetails">
+            <!-- Selected item details will show up here -->
+        </div>
+        <div class="form-group">
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" name="paymentMethod" required>
+                <option value="PhonePe">PhonePe</option>
+                <option value="Google Pay">Google Pay</option>
+                <option value="UPI">UPI</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="upiId">UPI ID (if applicable):</label>
+            <input type="text" id="upiId" name="upiId" placeholder="Enter your UPI ID">
+        </div>
+        <button type="submit" class="btn" id="submitPaymentBtn">Submit Payment</button>
+    </div>
+</section>
+
+<script>
+    // Add Item Functionality
+    document.getElementById('addItemForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const itemName = document.getElementById('itemName').value;
+        const itemPrice = document.getElementById('itemPrice').value;
+        const itemCategory = document.getElementById('itemCategory').value;
+        const itemPhoto = document.getElementById('itemPhoto').files[0];
+
+        if (itemName && itemPrice && itemCategory && itemPhoto) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const itemImage = reader.result;
+
+                let items = JSON.parse(localStorage.getItem('items')) || [];
+                items.push({
+                    name: itemName,
+                    price: itemPrice,
+                    category: itemCategory,
+                    photo: itemImage
+                });
+                localStorage.setItem('items', JSON.stringify(items));
+
+                document.getElementById('addItemForm').reset();
+                alert('Item added successfully!');
+            };
+            reader.readAsDataURL(itemPhoto);
+        } else {
+            alert('Please fill all fields and upload a photo.');
+        }
+    });
+
+    // Display Items on Buy Page
+    function displayItems() {
+        const items = JSON.parse(localStorage.getItem("items")) || [];
+        const itemList = document.getElementById("itemList");
+        itemList.innerHTML = "";
+
+        if (items.length > 0) {
+            items.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("item");
+                itemDiv.innerHTML = `
+                    <img src="${item.photo}" alt="${item.name}">
+                    <div>
+                        <p><strong>${item.name}</strong></p>
+                        <p>Price: ₹ ${item.price}</p>
+                        <p>Category: ${item.category}</p>
+                        <button class="buy-btn" data-name="${item.name}">Buy</button>
+                    </div>
+                `;
+                itemList.appendChild(itemDiv);
+            });
+
+            // Add event listener for Buy buttons
+            document.querySelectorAll(".buy-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    const itemName = this.dataset.name;
+                    const item = items.find(i => i.name === itemName);
+
+                    if (item) {
+                        // Show payment page with item details
+                        localStorage.setItem("selectedItem", JSON.stringify(item));
+                        window.location.href = "payment.html";
+                    }
+                });
+            });
+        } else {
+            itemList.innerHTML = "<p>No items available for sale.</p>";
+        }
+    }
+
+    // On load, display items in Buy Section
+    window.onload = function () {
+        const path = window.location.pathname;
+
+        if (path.includes("index.html") || path.includes("add-items.html")) {
+            document.getElementById("addItemPage").style.display = "block";
+            document.getElementById("buyPage").style.display = "none";
+            document.getElementById("paymentPage").style.display = "none";
+        } else if (path.includes("buy.html")) {
+            document.getElementById("addItemPage").style.display = "none";
+            document.getElementById("buyPage").style.display = "block";
+            document.getElementById("paymentPage").style.display = "none";
+            displayItems();
+        } else if (path.includes("payment.html")) {
+            document.getElementById("addItemPage").style.display = "none";
+            document.getElementById("buyPage").style.display = "none";
+            document.getElementById("paymentPage").style.display = "block";
+
+            const selectedItem = JSON.parse(localStorage.getItem("selectedItem"));
+            if (selectedItem) {
+                document.getElementById("paymentItemDetails").innerHTML = `
+                    <img src="${selectedItem.photo}" alt="${selectedItem.name}">
+                    <p><strong>${selectedItem.name}</strong></p>
+                    <p>Price: ₹ ${selectedItem.price}</p>
+                `;
+            }
+        }
+    };
+</script>
+
+</body>
+
+</html>

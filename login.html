@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Swap Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+            color: white;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar .nav-links {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* Main Login Section */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Login Box */
+        .login-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            border: 1px solid #ccc;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Social Media Buttons */
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .social-btn.google-btn {
+            background-color: #db4437;
+        }
+
+        .social-btn.facebook-btn {
+            background-color: #3b5998;
+        }
+
+        .social-btn.twitter-btn {
+            background-color: #1da1f2;
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Header and Navigation Bar -->
+    <header class="navbar">
+        <a href="#" class="logo">SwapShop</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="add-items.html">Add Items</a></li>
+            <li><a href="buy.html">buy</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Login Section -->
+    <section class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+
+            <!-- Error Message -->
+            <p id="error-message" class="error-message">Email must end with @gmail.com</p>
+
+            <!-- Forgot Password Link -->
+            <div class="forgot-password">
+                <p><a href="#">Forgot Password?</a></p>
+            </div>
+
+            <!-- Social Media Login Section -->
+            <div class="social-login">
+                <p>Or login with:</p>
+                <div class="social-buttons">
+                    <a href="https://accounts.google.com/signin" target="_blank" class="social-btn google-btn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google"> Login with Google
+                    </a>
+                    <a href="https://www.facebook.com/login" target="_blank" class="social-btn facebook-btn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook"> Login with Facebook
+                    </a>
+                    <a href="https://twitter.com/login" target="_blank" class="social-btn twitter-btn">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/6/60/Twitter_Logo_2012.svg" alt="Twitter"> Login with Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+            var email = document.getElementById("email").value;
+
+            // Check if email ends with "@gmail.com"
+            if (!email.endsWith("@gmail.com")) {
+                document.getElementById("error-message").style.display = "block"; // Show error message
+            } else {
+                // If email is valid, hide the error message and proceed
+                document.getElementById("error-message").style.display = "none";
+                // Normally, you would submit the form here
+                // For demonstration purposes, we'll just show an alert.
+                alert("Login Successful!");
+            }
+        });
+    </script>
+</body>
+
+</html>

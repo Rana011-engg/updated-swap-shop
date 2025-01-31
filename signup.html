@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Swap Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 15px 20px;
+        }
+
+        .navbar .logo {
+            color: #fff;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            background-color: #444;
+        }
+
+        /* Sign Up Form */
+        .signup-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .signup-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .signup-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .signup-container input:focus {
+            border-color: #333;
+            outline: none;
+        }
+
+        .signup-container .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-container .btn:hover {
+            background-color: #444;
+        }
+
+        .success-message {
+            color: #333;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .success-message a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .success-message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">SwapShop</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="buy.html">Buy</a></li>
+                <li><a href="add-items.html">Add Items</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <p id="email-error" class="error-message">The email must contain @gmail.com.</p>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+        <p id="success-message" class="success-message" style="display: none;">Sign up successful! You can now <a href="login.html">log in</a>.</p>
+    </div>
+
+    <script>
+        // JavaScript for handling form submission and showing success/error messages
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the email value
+            const email = document.getElementById("email").value;
+
+            // Check if email contains '@gmail.com'
+            if (!email.includes('@gmail.com')) {
+                // Show the error message
+                document.getElementById("email-error").style.display = "block";
+                return; // Stop the form from submitting
+            }
+
+            // Hide error message if email is valid
+            document.getElementById("email-error").style.display = "none";
+
+            // Simulate a successful signup
+            document.getElementById("signup-form").reset(); // Optionally reset the form
+            document.getElementById("success-message").style.display = "block"; // Show success message
+        });
+    </script>
+</body>
+</html>

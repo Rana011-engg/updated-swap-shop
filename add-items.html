@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swap Shop</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Login Page (Appears when the user is not logged in) -->
+  <div id="login-container" class="form-container" style="display: none;">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Enter username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <!-- Add Item Form (Appears after user is logged in) -->
+  <div id="add-item-container" class="form-container" style="display: none;">
+    <h1>Add Item</h1>
+    <form id="addItemForm">
+      <div class="form-group">
+        <label for="Name">Name:</label>
+        <input type="text" id="Name" name="Name" placeholder="Enter item name" required>
+      </div>
+      <div class="form-group">
+        <label for="itemPhoto">Upload Photo:</label>
+        <input type="file" id="itemPhoto" name="itemPhoto" accept="image/*" required>
+      </div>
+      <div class="form-group">
+        <label for="itemPrice">Price:</label>
+        <input type="number" id="itemPrice" name="itemPrice" placeholder="Enter price" required>
+      </div>
+      <div class="form-group">
+        <label for="itemCategory">Select Item Category:</label>
+        <select id="itemCategory" name="itemCategory" required>
+          <option value="" disabled selected>Choose a category</option>
+          <option value="Books">Books</option>
+          <option value="Calculators">Calculators</option>
+          <option value="Protractors">Protractors</option>
+          <option value="Mini-Drafters">Mini-Drafters</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn">Add Item</button>
+    </form>
+  </div>
+
+  <!-- Buy Page (Displays items for sale) -->
+  <div id="buy-container" class="buy-container" style="display: none;">
+    <header>
+      <h1>Available Items</h1>
+    </header>
+    <section id="items-container">
+      <!-- Items will be dynamically inserted here -->
+    </section>
+  </div>
+
+  <!-- Add to Cart Button -->
+  <button id="addItemBtn" style="display: block; margin: 20px auto;">Add Item to Sell</button>
+
+  <script>
+    // Check if the user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const items = JSON.parse(localStorage.getItem('items')) || [];
+
+    // Elements
+    const loginContainer = document.getElementById('login-container');
+    const addItemContainer = document.getElementById('add-item-container');
+    const buyContainer = document.getElementById('buy-container');
+    const addItemBtn = document.getElementById('addItemBtn');
+    const itemsContainer = document.getElementById('items-container');
+
+    // Show Login Page
+    function showLoginPage() {
+      loginContainer.style.display = 'block';
+      addItemContainer.style.display = 'none';
+      buyContainer.style.display = 'none';
+      addItemBtn.style.display = 'none';
+    }
+
+    // Show Add Item Form
+    function showAddItemPage() {
+      loginContainer.style.display = 'none';
+      addItemContainer.style.display = 'block';
+      buyContainer.style.display = 'none';
+      addItemBtn.style.display = 'none';
+    }
+
+    // Show Buy Page
+    function showBuyPage() {
+      loginContainer.style.display = 'none';
+      addItemContainer.style.display = 'none';
+      buyContainer.style.display = 'block';
+      addItemBtn.style.display = 'block';
+      displayItems();
+    }
+
+    // Display all added items in the Buy Page
+    function displayItems() {
+      itemsContainer.innerHTML = ''; // Clear previous items
+      items.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.classList.add('item-card');
+        itemCard.innerHTML = `
+          <img src="${item.photo}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>${item.category}</p>
+          <p>Price: ₹${item.price}</p>
+        `;
+        itemsContainer.appendChild(itemCard);
+      });
+    }
+
+    // Login Form Submit Handler
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      localStorage.setItem('isLoggedIn', 'true');
+      showAddItemPage();
+    });
+
+    // Add Item Form Submit Handler
+    document.getElementById('addItemForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const itemName = document.getElementById('Name').value;
+      const itemPhoto = document.getElementById('itemPhoto').files[0];
+      const itemPrice = document.getElementById('itemPrice').value;
+      const itemCategory = document.getElementById('itemCategory').value;
+
+      if (itemName && itemPhoto && itemPrice && itemCategory) {
+        const itemData = {
+          name: itemName,
+          price: itemPrice,
+          category: itemCategory,
+          photo: URL.createObjectURL(itemPhoto),
+        };
+
+        items.push(itemData);
+        localStorage.setItem('items', JSON.stringify(items));
+
+        alert('Item added successfully!');
+        showBuyPage();
+      } else {
+        alert('Please fill all fields!');
+      }
+    });
+
+    // Click Add Item Button (If not logged in, show login page)
+    addItemBtn.addEventListener('click', function() {
+      if (!isLoggedIn) {
+        showLoginPage();
+      } else {
+        showAddItemPage();
+      }
+    });
+
+    // Initial Page Load Logic
+    if (isLoggedIn) {
+      showBuyPage();
+    } else {
+      showLoginPage();
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2, h1 {
+      text-align: center;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    .item-card {
+      width: 200px;
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+    }
+
+    .item-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    #items-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+  </style>
+</body>
+</html>
